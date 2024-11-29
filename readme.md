@@ -51,3 +51,5 @@ Protected routes are handled by postgrest and postgres functions (function check
 I have purposefully not included any css. This is a starter pack after all.
 
 There are some classes and id's added in to the HTML, but mostly for htmx functionality.
+
+Also: I have added some functions for sanitizing html and input and stuff - but it is currently not in use in any of the functions. Not tested, but should work.. ;)
