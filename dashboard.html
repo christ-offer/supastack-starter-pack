@@ -20,7 +20,6 @@
 
     async function uploadFile() {
       console.log("Starting upload process");
-
       const fileInput = document.getElementById("fileInput");
       const statusDiv = document.getElementById("status");
 
@@ -29,14 +28,11 @@
         data: { user },
         error: userError,
       } = await supaClient.auth.getUser();
-
       if (userError || !user) {
         console.error("Authentication error:", userError);
         statusDiv.innerHTML = "User not authenticated";
         return;
       }
-
-      console.log("User authenticated:", user.id);
 
       // Check if file is selected
       if (!fileInput.files || fileInput.files.length === 0) {
@@ -45,19 +41,47 @@
         return;
       }
 
-      const file = fileInput.files[0];
-      console.log("File selected:", file.name);
-
-      // Create a safe filename
-      const fileExt = file.name.split(".").pop();
-      const fileName = `${user.id}/avatar/${Date.now()}.${fileExt}`;
-      console.log("Generated filename:", fileName);
-
       try {
+        // First, list all files in the user's avatar folder
+        const { data: existingFiles, error: listError } =
+          await supaClient.storage
+            .from(BUCKET_NAME)
+            .list(`${user.id}` + "/avatar");
+
+        if (listError) {
+          console.error("Error listing files:", listError);
+          throw listError;
+        }
+
+        // Delete all existing files if there are any
+        if (existingFiles && existingFiles.length > 0) {
+          const filesToDelete = existingFiles.map(
+            (file) => `${user.id}/avatar/${file.name}`,
+          );
+          const { error: deleteError } = await supaClient.storage
+            .from(BUCKET_NAME)
+            .remove(filesToDelete);
+
+          if (deleteError) {
+            console.error("Error deleting files:", deleteError);
+            throw deleteError;
+          }
+          console.log("Existing files deleted successfully");
+        }
+
+        // Continue with the original upload process
+        const file = fileInput.files[0];
+        console.log("File selected:", file.name);
+
+        // Create a safe filename
+        const fileExt = file.name.split(".").pop();
+        const fileName = `${user.id}/avatar/user_avatar.${fileExt}`;
+        console.log("Generated filename:", fileName);
+
         statusDiv.innerHTML = "Uploading...";
         console.log("Starting file upload to bucket");
 
-        // Upload file to Supabase Storage
+        // Upload new file to Supabase Storage
         const { data, error: uploadError } = await supaClient.storage
           .from(BUCKET_NAME)
           .upload(fileName, file);
@@ -66,14 +90,12 @@
           console.error("Upload error:", uploadError);
           throw uploadError;
         }
-
         console.log("File uploaded successfully");
 
         // Get public URL for the uploaded file
         const {
           data: { publicUrl },
         } = supaClient.storage.from(BUCKET_NAME).getPublicUrl(fileName);
-
         console.log("Public URL generated:", publicUrl);
 
         // Store URL in profiles table
@@ -86,9 +108,7 @@
           console.error("Database error:", dbError);
           throw dbError;
         }
-
         console.log("Profile updated successfully");
-
         statusDiv.innerHTML = `Upload successful! URL: ${publicUrl}`;
         htmx.trigger("#profile-upload", "customTrigger");
       } catch (error) {

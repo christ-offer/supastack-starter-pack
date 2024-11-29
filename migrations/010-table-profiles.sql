@@ -56,6 +56,12 @@ values
 -- Enable RLS
 ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
 
+-- Allow public read access to the bucket
+CREATE POLICY "Allow public file listing" ON storage.objects
+  FOR SELECT
+  TO public
+  USING (bucket_id = 'user_files');
+
 -- Create policy for inserting objects
 CREATE POLICY "Users can upload their own files"
 ON storage.objects FOR INSERT
