@@ -2,7 +2,7 @@
 
 ## What is this?
 
-This is a fully functional CRUD starter pack using:
+This is a "fully functional" CRUD starter pack using:
 
 - HTML/HTMX for the frontend
 - Supabase for the backend
