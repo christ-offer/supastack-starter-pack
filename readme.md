@@ -7,6 +7,7 @@ This is a "fully functional" CRUD starter pack using:
 - HTML/HTMX for the frontend
 - Supabase for the backend
 - A tiny bit of javascript glue to handle auth and storage
+- Can be hosted on github pages
 
 It is purposefully basic and not very fancy to provide a decent enough starting point to build from.
 
