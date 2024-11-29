@@ -56,7 +56,9 @@ Also: I have added some functions for sanitizing html and input and stuff - but 
 
 ## Screenshots:
 
-### Front page when logged in (if not - header has a sign in button and the create post part is not there - neither the edit/delete post buttons on your own posts)
+### Front page when logged in
+
+Note that the edit and delete buttons only appear on your own posts - and only when logged in (obviously)
 
 Edit posts replaces the post content with inputs and lets you edit in place
 Delete posts replaces it with a "post has been deleted" div that dissappears after a second.
