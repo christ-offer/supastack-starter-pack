@@ -50,7 +50,7 @@
 
       // Create a safe filename
       const fileExt = file.name.split(".").pop();
-      const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+      const fileName = `${user.id}/avatar/${Date.now()}.${fileExt}`;
       console.log("Generated filename:", fileName);
 
       try {
