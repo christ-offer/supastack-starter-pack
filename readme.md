@@ -3,20 +3,37 @@
 ## What is this?
 
 This is a start pack for a project that uses:
-HTML/HTMX for the frontend
-Supabase for the backend
-A tiny bit of javascript glue to handle auth and storage
+
+- HTML/HTMX for the frontend
+- Supabase for the backend
+- A tiny bit of javascript glue to handle auth and storage
 
 ## How it works:
 
-The backend is supabase - postgrest - postgres.
-Any logic is handled by postgres functions and triggers.
-Postgres functions returns chunks of html (templates/components) to the front on requests.
+- The entire backend runs on Supabase (postgres / postgrest API).
+- Any logic is handled by postgres functions and triggers.
+- Postgres functions returns chunks of html (templates/components) to the front on requests.
 
-Login and signup is handled by the supabase client - but as soon as you login, the token is stored as a cookie in the browser - and this is used for auth requests to the postgrest API.
+### Auth:
+
+Authentication is handled clientside by the supabase client.
+
+Upon successful login or signup, a token is automatically stored as a browser cookie.
+
+This token is then used to authenticate subsequent requests to the postgREST API.
+
+### File Uploads / Storage:
+
 File upload is similarly handled clientside by the supabase client - as the storage api is only available through the client (or https calls ofc).
 
-Besides this - everything goes through postgres functions - including route protections. Protected routes will redirect you to auth if you are not authenticated.
+### Routes/Protected routes
+
+Routing is mainly handled by the static html files - with queries for individual pages happening through a search-string parameter.
+
+Examples:
+
+- localhost:8080/post?id=post_id
+- localhost:8080/profile?id=profile_id
 
 ## How to use:
 
@@ -29,4 +46,6 @@ Besides this - everything goes through postgres functions - including route prot
 
 ## Notes:
 
-I have purposefully not included any css. Why should my opinions matter there. There are some classes and id's added in to the HTML, but mostly for htmx functionality.
+I have purposefully not included any css. This is a starter pack after all.
+
+There are some classes and id's added in to the HTML, but mostly for htmx functionality.
