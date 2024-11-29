@@ -1,8 +1,8 @@
-# HTMX/Supabase Start Pack - The SupaStack
+# Supastack Starter Pack
 
 ## What is this?
 
-This is a start pack for a project that uses:
+This is a fully functional CRUD starter pack using:
 
 - HTML/HTMX for the frontend
 - Supabase for the backend
