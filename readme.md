@@ -10,6 +10,14 @@ This is a "fully functional" CRUD starter pack using:
 
 It is purposefully basic and not very fancy to provide a decent enough starting point to build from.
 
+It comes with two tables, profiles and posts.
+
+The profile table automatically creates a row when a user signs up.
+Profiles can be edited by the owner and are public to read.
+Posts can be created, edited and delted by the user who created them. And read by anyone.
+
+There is also a file storage bucket for files. Users are allowed to upload files to a folder that is named after their profile id. Anyone can read/download files.
+
 ## How it works:
 
 - The entire backend runs on Supabase (postgres / postgrest API).
