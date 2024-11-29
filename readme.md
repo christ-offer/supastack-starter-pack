@@ -69,6 +69,8 @@ Delete posts replaces it with a "post has been deleted" div that dissappears aft
 
 ### Profile page for other user
 
+Lists all the posts from this user
+
 <img width="400" src="/screenshots/profile-page.png" alt="auth-front-page" style="max-width: 400px;">
 
 ### Dashboard page
