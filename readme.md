@@ -58,16 +58,19 @@ Also: I have added some functions for sanitizing html and input and stuff - but 
 
 ### Front page when logged in (if not - header has a sign in button and the create post part is not there - neither the edit/delete post buttons on your own posts)
 
-![auth-front-page](/screenshots/authed-front-page.png)
+Edit posts replaces the post content with inputs and lets you edit in place
+Delete posts replaces it with a "post has been deleted" div that dissappears after a second.
+
+<img src="/screenshots/authed-front-page.png" alt="auth-front-page" style="max-width: 400px;">
 
 ### Post page for other user (not your own post)
 
-![auth-front-page](/screenshots/post-page.png)
+<img src="/screenshots/post-page.png" alt="auth-front-page" style="max-width: 400px;">
 
 ### Profile page for other user
 
-![auth-front-page](/screenshots/profile-page.png)
+<img src="/screenshots/profile-page.png" alt="auth-front-page" style="max-width: 400px;">
 
 ### Dashboard page
 
-![auth-front-page](/screenshots/dashboard.png)
+<img src="/screenshots/dashboard.png" alt="auth-front-page" style="max-width: 400px;">
