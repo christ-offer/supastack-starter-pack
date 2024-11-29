@@ -53,3 +53,21 @@ I have purposefully not included any css. This is a starter pack after all.
 There are some classes and id's added in to the HTML, but mostly for htmx functionality.
 
 Also: I have added some functions for sanitizing html and input and stuff - but it is currently not in use in any of the functions. Not tested, but should work.. ;)
+
+## Screenshots:
+
+### Front page when logged in (if not - header has a sign in button and the create post part is not there - neither the edit/delete post buttons on your own posts)
+
+![auth-front-page](/screenshots/authed-front-page.png)
+
+### Post page for other user (not your own post)
+
+![auth-front-page](/screenshots/post-page.png)
+
+### Profile page for other user
+
+![auth-front-page](/screenshots/profile-page.png)
+
+### Dashboard page
+
+![auth-front-page](/screenshots/dashboard.png)
