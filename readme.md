@@ -1,16 +1,32 @@
-# HTMX Supabase Starter (WIP)
+# HTMX/Supabase Start Pack - The SupaStack
 
-HTMX - Postgrest usage - no server in the middle - all squeel.
+## What is this?
 
--- Uses supabase-js for two things - auth and the supabase storage api.
+This is a start pack for a project that uses:
+HTML/HTMX for the frontend
+Supabase for the backend
+A tiny bit of javascript glue to handle auth and storage
 
-Besides this - its all postgres functions and triggers. With template functions returning html from htmx ajax requests.
+## How it works:
 
-Auth:
-Supabase-js - manually setting cookies instead of local storage so we can send these as headers in requests to postgrest.
+The backend is supabase - postgrest - postgres.
+Any logic is handled by postgres functions and triggers.
+Postgres functions returns chunks of html (templates/components) to the front on requests.
 
-Storage:
-Supabase-js - supabase storage api - needs the client to be able to upload files (and the cookies/auth to be able to insert file url into db)
+Login and signup is handled by the supabase client - but as soon as you login, the token is stored as a cookie in the browser - and this is used for auth requests to the postgrest API.
+File upload is similarly handled clientside by the supabase client - as the storage api is only available through the client (or https calls ofc).
 
-Everything else:
-HTMX requests directly to posgrest functions and return html.
+Besides this - everything goes through postgres functions - including route protections. Protected routes will redirect you to auth if you are not authenticated.
+
+## How to use:
+
+1. Clone this repo
+2. Create a supabase project
+3. Add in the url and anon key where needed in the code
+4. Simples way to add migrations is just to use the supabase dashboard SQL editor. Do it in the order the files are listed in.
+5. For auth and everything to work - you have to run the html files as a server - i use `npx http-server` --cors to handle this - but any server will do.
+6. Build away!
+
+## Notes:
+
+I have purposefully not included any css. Why should my opinions matter there. There are some classes and id's added in to the HTML, but mostly for htmx functionality.
