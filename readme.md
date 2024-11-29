@@ -61,16 +61,16 @@ Also: I have added some functions for sanitizing html and input and stuff - but 
 Edit posts replaces the post content with inputs and lets you edit in place
 Delete posts replaces it with a "post has been deleted" div that dissappears after a second.
 
-<img src="/screenshots/authed-front-page.png" alt="auth-front-page" style="max-width: 400px;">
+<img width="400" src="/screenshots/authed-front-page.png" alt="auth-front-page" style="max-width: 400px;">
 
 ### Post page for other user (not your own post)
 
-<img src="/screenshots/post-page.png" alt="auth-front-page" style="max-width: 400px;">
+<img width="400" src="/screenshots/post-page.png" alt="auth-front-page" style="max-width: 400px;">
 
 ### Profile page for other user
 
-<img src="/screenshots/profile-page.png" alt="auth-front-page" style="max-width: 400px;">
+<img width="400" src="/screenshots/profile-page.png" alt="auth-front-page" style="max-width: 400px;">
 
 ### Dashboard page
 
-<img src="/screenshots/dashboard.png" alt="auth-front-page" style="max-width: 400px;">
+<img width="400" src="/screenshots/dashboard.png" alt="auth-front-page" style="max-width: 400px;">
