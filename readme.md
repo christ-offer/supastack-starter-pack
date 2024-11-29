@@ -8,6 +8,8 @@ This is a "fully functional" CRUD starter pack using:
 - Supabase for the backend
 - A tiny bit of javascript glue to handle auth and storage
 
+It is purposefully basic and not very fancy to provide a decent enough starting point to build from.
+
 ## How it works:
 
 - The entire backend runs on Supabase (postgres / postgrest API).
@@ -49,7 +51,8 @@ Protected routes are handled by postgrest and postgres functions (function check
 ## Some further ideas as to what can be done:
 
 - Realtime updates for posts using the supabase client realtime api to listen for updates and update the ui with x new updates and a refresh button.
-- Regular/Vector search for posts
+- Regular/Vector search for posts (or whatever tables you want)
+- Pagination/infinite scrolling for posts
 - And much much much more.
 
 ## Notes:
