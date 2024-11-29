@@ -35,6 +35,8 @@ Examples:
 - localhost:8080/post?id=post_id
 - localhost:8080/profile?id=profile_id
 
+Protected routes are handled by postgrest and postgres functions (function checks auth.uid() and if no uid redirects to login page)
+
 ## How to use:
 
 1. Clone this repo
