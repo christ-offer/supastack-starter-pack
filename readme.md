@@ -46,6 +46,12 @@ Protected routes are handled by postgrest and postgres functions (function check
 5. For auth and everything to work - you have to run the html files as a server - i use `npx http-server` --cors to handle this - but any server will do.
 6. Build away!
 
+## Some further ideas as to what can be done:
+
+- Realtime updates for posts using the supabase client realtime api to listen for updates and update the ui with x new updates and a refresh button.
+- Regular/Vector search for posts
+- And much much much more.
+
 ## Notes:
 
 I have purposefully not included any css. This is a starter pack after all.
