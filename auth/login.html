@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+    <form onsubmit="handleAuthResponse(event); return false;">
+      <input name="email" type="email" />
+      <input name="password" type="password" />
+      <button type="submit" name="action" value="login">Login</button>
+    </form>
+    <script src="../script/auth.js"></script>
+  </body>
+</html>

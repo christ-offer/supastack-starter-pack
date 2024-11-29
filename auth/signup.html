@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+    <form onsubmit="handleAuthResponse(event); return false;">
+      <input name="email" type="email" required />
+      <input
+        name="password"
+        type="password"
+        required
+        pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+        title="Password must be at least 8 characters long and include both letters and numbers"
+      />
+      <input
+        type="password"
+        class="verify-password"
+        required
+        oninput="validatePasswords()"
+      />
+      <button type="submit" name="action" value="signup">Sign Up</button>
+    </form>
+    <p class="response"></p>
+    <script>
+      function validatePasswords() {
+        const password = document.querySelector('input[name="password"]');
+        const verify = document.querySelector(".verify-password");
+        verify.setCustomValidity(
+          password.value === verify.value ? "" : "Passwords do not match",
+        );
+      }
+    </script>
+    <script src="../script/auth.js"></script>
+  </body>
+</html>

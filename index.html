@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/htmx.org"></script>
+    <script src="/script/cookiehandler.js"></script>
+    <script></script>
+  </head>
+  <body>
+    <div
+      hx-get="https://your-supabase-project-id.supabase.co/rest/v1/rpc/get_header"
+      hx-trigger="load"
+    ></div>
+    <div
+      hx-get="https://your-supabase-project-id.supabase.co/rest/v1/rpc/get_create_post"
+      hx-trigger="load"
+    ></div>
+    <p class="post-creation-message"></p>
+    <main
+      id="post-list"
+      hx-get="https://your-supabase-project-id.supabase.co/rest/v1/rpc/get_posts"
+      hx-trigger="load, refresh"
+    ></main>
+  </body>
+</html>
