@@ -89,12 +89,16 @@ returns "text/html" as $$
 declare
   user_id uuid := auth.uid ();
   user_profile public.profiles;
+  sanitized_profile_name text;
 begin
   if user_id is null then
     return '<p>unauth access </p>';
   end if;
+
+  sanitized_profile_name := public.sanitize_input(profile_name);
+
   update public.profiles
-  set name = profile_name
+  set name = sanitized_profile_name
   where id = user_id;
 
   select * into user_profile from public.profiles where id = user_id;

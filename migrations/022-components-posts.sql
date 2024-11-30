@@ -324,9 +324,14 @@ returns "text/html" as $$
 declare
   post public.posts;
   profile public.profiles;
+  sanitized_title text;
+  sanitized_body text;
 begin
+   sanitized_title := public.sanitize_input(post_title);
+   sanitized_body := public.sanitize_input(post_body);
+
   update public.posts
-  set title = post_title, body = post_body
+  set title = sanitized_title, body = sanitized_body
   where id = post_id;
 
   select * into post from public.posts where id = post_id;
@@ -357,9 +362,15 @@ POST - CREATE POST ROUTE
 */
 create or replace function public.create_post(author_user_id uuid, post_title text, post_body text)
 returns "text/html" as $$
+declare
+sanitized_title text;
+sanitized_body text;
 begin
+  sanitized_title := public.sanitize_input(post_title);
+  sanitized_body := public.sanitize_input(post_body);
+
   insert into public.posts (user_id, title, body)
-  values (author_user_id, post_title, post_body);
+  values (author_user_id, sanitized_title, sanitized_body);
 
   return format($html$
     <div class="post-created" data-auto-remove="1000">
