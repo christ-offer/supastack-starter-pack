@@ -22,7 +22,7 @@ There is also a file storage bucket for files. Users are allowed to upload files
 ## How it works:
 
 - The entire backend runs on Supabase (postgres / postgrest API).
-- Any logic is handled by postgres functions and triggers.
+- Any logic is handled by postgres functions and triggers. (including input sanitization)
 - Postgres functions returns chunks of html (templates/components) to the front on requests.
 
 ### Auth:
@@ -69,8 +69,6 @@ Protected routes are handled by postgrest and postgres functions (function check
 I have purposefully not included any css. This is a starter pack after all.
 
 There are some classes and id's added in to the HTML, but mostly for htmx functionality.
-
-Also: I have added some functions for sanitizing html and input and stuff - but it is currently not in use in any of the functions. Not tested, but should work.. ;)
 
 ## Screenshots:
 
