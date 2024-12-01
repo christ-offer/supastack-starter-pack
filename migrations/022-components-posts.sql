@@ -144,14 +144,14 @@ BEGIN
   END;
 
   -- Get the post with the corresponding user details
-  SELECT * INTO post FROM public.posts WHERE id = uuid_post_id;
+  post := public.get_post_by_id(uuid_post_id);
 
   -- Check if post exists
   IF post IS NULL THEN
     RETURN '<div>Post not found</div>';
   END IF;
 
-  SELECT * INTO profile FROM public.profiles WHERE id = post.user_id;
+  profile := public.get_user_profile(post.user_id);
 
   -- Check if the post belongs to the current user
   IF post.user_id = token_user_id THEN
@@ -184,7 +184,7 @@ begin
     RETURN '<div>Profile not found</div>';
   END;
 
-  select * into profile from public.profiles where id = uuid_profile_id;
+  profile := public.get_user_profile(uuid_profile_id);
 
   SELECT
     COALESCE(
@@ -213,7 +213,7 @@ CREATE OR REPLACE FUNCTION public.delete_post(post_id uuid)
 RETURNS "text/html" AS $$
 BEGIN
   -- Delete the post
-  DELETE FROM public.posts WHERE posts.id = post_id;
+  public.delete_post(post_id);
 
   RETURN format($html$
     <div class="post-deleted" data-auto-remove="1000">
@@ -310,8 +310,8 @@ declare
   post public.posts;
   profile public.profiles;
 begin
-  select * into post from public.posts where id = post_id;
-  select * into profile from public.profiles where id = post.user_id;
+  post := public.get_post_by_id(post_id);
+  profile := public.get_user_profile(post.user_id);
   return public.edit_post_template(post, profile);
 end;
 $$ language plpgsql;
@@ -324,18 +324,13 @@ returns "text/html" as $$
 declare
   post public.posts;
   profile public.profiles;
-  sanitized_title text;
-  sanitized_body text;
+  update_post public.posts;
 begin
-   sanitized_title := public.sanitize_input(post_title);
-   sanitized_body := public.sanitize_input(post_body);
+  update_post := public.update_post(post_id, post_title, post_body);
 
-  update public.posts
-  set title = sanitized_title, body = sanitized_body
-  where id = post_id;
+  post := public.get_post_by_id(update_post.id);
+  profile := public.get_user_profile(post.user_id);
 
-  select * into post from public.posts where id = post_id;
-  select * into profile from public.profiles where id = post.user_id;
   return public.users_post_template(post, profile);
 end;
 $$ language plpgsql;
@@ -366,11 +361,7 @@ declare
 sanitized_title text;
 sanitized_body text;
 begin
-  sanitized_title := public.sanitize_input(post_title);
-  sanitized_body := public.sanitize_input(post_body);
-
-  insert into public.posts (user_id, title, body)
-  values (author_user_id, sanitized_title, sanitized_body);
+  public.create_post(author_user_id, post_title, post_body);
 
   return format($html$
     <div class="post-created" data-auto-remove="1000">

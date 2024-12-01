@@ -70,14 +70,15 @@ GET - PROFILE ROUTE (PROTECTED)
 create or replace function public.public_get_profile()
 returns "text/html" as $$
 declare
-  user_id uuid := auth.uid ();
+  user_id uuid := auth.uid();
   user_profile public.profiles;
 begin
   if user_id is null then
     return '<script>window.location.href = "/auth.html";</script>';
   end if;
-  select * into user_profile from public.profiles where id = user_id;
-  return public.edit_profile_template (user_profile);
+
+  user_profile := public.get_user_profile(user_id);
+  return public.edit_profile_template(user_profile);
 end;
 $$ language plpgsql;
 
@@ -87,24 +88,26 @@ POST - UPDATE PROFILE ROUTE (PROTECTED)
 create or replace function public.update_profile(profile_name text)
 returns "text/html" as $$
 declare
-  user_id uuid := auth.uid ();
-  user_profile public.profiles;
-  sanitized_profile_name text;
+user_id uuid := auth.uid();
+user_profile public.profiles;
+sanitized_profile_name text;
 begin
-  if user_id is null then
+-- Auth check
+if user_id is null then
     return '<p>unauth access </p>';
-  end if;
+end if;
 
-  sanitized_profile_name := public.sanitize_input(profile_name);
+-- Sanitize input
+sanitized_profile_name := public.sanitize_input(profile_name);
 
-  update public.profiles
-  set name = sanitized_profile_name
-  where id = user_id;
+-- Update profile and get updated data
+user_profile := public.update_user_profile(user_id, sanitized_profile_name);
 
-  select * into user_profile from public.profiles where id = user_id;
-  return public.edit_profile_template (user_profile);
+-- Return HTML template
+return public.edit_profile_template(user_profile);
 end;
 $$ language plpgsql;
+
 
 /*
 GET - PROFILE BY ID ROUTE
@@ -115,8 +118,6 @@ declare
   profile public.profiles;
   uuid_profile_id uuid;
 begin
-
-  uuid_profile_id := auth.uid();
   -- Check for null/empty profile_id
   if profile_id is null or profile_id = '' then
     return '<div>Profile not found</div>';
@@ -125,12 +126,11 @@ begin
   -- Try to convert text to UUID
   begin
     uuid_profile_id := profile_id::uuid;
-  exception when invalid_text_representation then
+  exception when others then
     return '<div>Profile not found</div>';
   end;
 
-  -- Get the profile with the corresponding user details
-  select * into profile from public.profiles where id = uuid_profile_id;
+  profile := public.get_user_profile(uuid_profile_id);
 
   -- Check if profile exists
   if profile is null then
@@ -175,7 +175,7 @@ begin
 token_user_id := auth.uid();
 
 -- get matching profile to token user id
-select * into profile from public.profiles where id = token_user_id;
+profile := public.get_user_profile(token_user_id);
 
 return public.upload_profile_img_template(profile);
 end;
